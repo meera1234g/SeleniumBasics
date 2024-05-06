@@ -4,9 +4,9 @@
 	import java.util.List;
 
 	import org.openqa.selenium.By;
-	import org.openqa.selenium.WebDriver;
+	
 	import org.openqa.selenium.WebElement;
-	import org.openqa.selenium.chrome.ChromeDriver;
+	
 	import org.openqa.selenium.support.ui.Select;
 	import org.testng.Assert;
 	import org.testng.annotations.Test;
@@ -50,8 +50,8 @@
 		loginButton.click();
 		WebElement actualemailfield = driver.findElement(By.xpath("//a[@class='account'and text()='meeru.ammu@gmail.com']"));
 		String actualresult = actualemailfield.getText();
-		String expectedresult = "abc.ammu@gmail.com";
-		Assert.assertEquals(actualresult, expectedresult, "Login not sucess"); // in third field message if it failes
+		String expectedresult = "meeru.ammu@gmail.com";
+		Assert.assertEquals(actualresult, expectedresult, "Login not sucess"); // in third field message if it fails
 	}
 	 
 	@Test
@@ -81,8 +81,8 @@
 	}
 	  @Test
 	  
-	public static void Guru99registration() {
-		WebDriver driver = new ChromeDriver();
+	public  void Guru99registration() {
+	
 		driver.get("https://demo.guru99.com/test/newtours/register.php");
 		driver.manage().window().maximize();
 		WebElement firstname = driver.findElement(By.xpath("//input[@name='firstName']"));
