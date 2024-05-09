@@ -4,10 +4,10 @@
 	import java.util.List;
 
 	import org.openqa.selenium.By;
-	
-	import org.openqa.selenium.WebElement;
-	
-	import org.openqa.selenium.support.ui.Select;
+    import org.openqa.selenium.WebDriver;
+    import org.openqa.selenium.WebElement;
+    import org.openqa.selenium.chrome.ChromeDriver;
+    import org.openqa.selenium.support.ui.Select;
 	import org.testng.Assert;
 	import org.testng.annotations.Test;
 
@@ -36,14 +36,14 @@
 		}
 	
 	@Test
-	   public void Validdemowebshop() {
+	   public void Validdemowebshop() 
+	{
 		
 		driver.get("https://demowebshop.tricentis.com/");
 		WebElement loginField = driver.findElement(By.className("ico-login"));
 		loginField.click();
 		WebElement userNameField = driver.findElement(By.id("Email")); 
 	    userNameField.sendKeys("meeru.ammu@gmail.com");
-		
 		WebElement passwordField = driver.findElement(By.id("Password"));
 		passwordField.sendKeys("qwerty123");
 		WebElement loginButton = driver.findElement(By.xpath("/html/body/div[4]/div[1]/div[4]/div[2]/div/div[2]/div[1]/div[2]/div[2]/form/div[5]/input"));
@@ -55,10 +55,10 @@
 	}
 	 
 	@Test
-	public  void Demowebregistration() {
+	public  void Demowebregistration() 
+	{
 		
 		driver.get("https://demowebshop.tricentis.com/register ");
-		
 		WebElement firstname = driver.findElement(By.xpath("//input[@id='FirstName']"));
 		firstname.sendKeys("Meera");
 		WebElement lastname = driver.findElement(By.xpath("//input[@id='LastName']"));
@@ -79,9 +79,11 @@
 		Assert.assertEquals(actualemail, Expectedemail, "Login is not sucess");
 		
 	}
+	
 	  @Test
 	  
-	public  void Guru99registration() {
+	public  void Guru99registration() 
+	  {
 	
 		driver.get("https://demo.guru99.com/test/newtours/register.php");
 		driver.manage().window().maximize();
@@ -116,9 +118,62 @@
 		String actualname = nameofemail.getText();
 		String Expectedname = "Note: Your user name is testuser." ;
 		Assert.assertEquals(actualname, Expectedname, "Login not successful");
+		Assert.assertTrue(true);// Boolean
 	}
 
-		}
+	  @Test
+	  public  void verifyRadioButtonIsSelected() 
+	  {
+		driver.get("https://demowebshop.tricentis.com/register");
+		WebElement radiobutton = driver.findElement(By.xpath("//input[@id='gender-male']"));
+		Boolean ismaleselected = radiobutton.isSelected();
+		Assert.assertFalse(ismaleselected, "Radio button is Selected");
+		System.out.println(ismaleselected +"  Button is not selected");
+		radiobutton.click();
+		Boolean maleselected = radiobutton.isSelected();
+		System.out.println(maleselected +"Button is Selected");
+		Assert.assertTrue(maleselected,"  The male radio button is not selected");
+		
+	  }
+	  
+	  
+	  @Test
+	 public void verifyRadioButtonFemaleisSelected() 
+	 {
+     Boolean isfemaleselected;	  
+	 driver.get("https://demowebshop.tricentis.com/register");
+	 WebElement femaleradiobutton = driver.findElement(By.xpath("//input[@id='gender-female']"));
+	 isfemaleselected = femaleradiobutton.isSelected();
+	 Assert.assertFalse(isfemaleselected," The button is  selected");
+	 System.out.println(isfemaleselected);  
+	 femaleradiobutton.click();
+	 isfemaleselected = femaleradiobutton.isSelected();
+	 Assert.assertTrue(isfemaleselected," The button is not selected");
+	 System.out.println(isfemaleselected);  
+     }
+	  
+	  @Test
+	  
+	  public void verifyVotetabisDisplayed() 
+	  {
+		  driver.get("https://demowebshop.tricentis.com/");  
+		  WebElement votebutton = driver.findElement(By.xpath("//input[@id='vote-poll-1']"));
+		  Boolean isvotebuttonenabled = votebutton.isDisplayed();
+		  Assert.assertTrue(isvotebuttonenabled, "Vote button not Displayed");
+		  System.out.println( isvotebuttonenabled   +" Vote button  is Displayed");
+	  }
+	  @Test
+	  
+	  public void verifySubscribeButtonisEnabled() 
+	  {
+		  driver.get("https://demowebshop.tricentis.com/");  
+		  WebElement subscribebutton = driver.findElement(By.xpath("//input[@id='newsletter-subscribe-button']"));
+		  Boolean issubscribebuttonenabled = subscribebutton .isDisplayed();
+		  Assert.assertTrue(issubscribebuttonenabled, " Subscribe button not Enabled");
+		  System.out.println( issubscribebuttonenabled   +" Subcribe button is Enabled");
+		 
+	  }
+  }     
 	 
 
 
