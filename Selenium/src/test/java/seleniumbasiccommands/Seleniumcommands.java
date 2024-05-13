@@ -3,11 +3,13 @@
 
 	import java.util.List;
 
-	import org.openqa.selenium.By;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
     import org.openqa.selenium.WebDriver;
     import org.openqa.selenium.WebElement;
     import org.openqa.selenium.chrome.ChromeDriver;
-    import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 	import org.testng.Assert;
 	import org.testng.annotations.Test;
 
@@ -168,11 +170,123 @@
 	  {
 		  driver.get("https://demowebshop.tricentis.com/");  
 		  WebElement subscribebutton = driver.findElement(By.xpath("//input[@id='newsletter-subscribe-button']"));
-		  Boolean issubscribebuttonenabled = subscribebutton .isDisplayed();
+		  Boolean issubscribebuttonenabled = subscribebutton.isEnabled();
 		  Assert.assertTrue(issubscribebuttonenabled, " Subscribe button not Enabled");
 		  System.out.println( issubscribebuttonenabled   +" Subcribe button is Enabled");
 		 
 	  }
+	  
+	  @Test
+	  
+	  public void verifyRightClick() 
+	  {
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		WebElement rightclickbutton = driver.findElement(By.xpath("//span[@class='context-menu-one btn btn-neutral']"));
+		Actions action = new Actions(driver);// Create obj of action class
+		action.contextClick(rightclickbutton).build().perform();// obj.contextClick(variable).build().perform();
+		
+		  
+	  }
+	  
+	  @Test
+	  
+	  public void verifyDoubleClick() 
+	  {
+		 driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		 WebElement doubleclick = driver.findElement(By.xpath("//button[text()='Double-Click Me To See Alert']"));
+		 Actions action = new Actions(driver);
+		 action.doubleClick(doubleclick).build().perform();
+	  }
+	  @Test
+	  
+	  public void verifyDragAndDrop() 
+	  {
+		driver.get("https://demoqa.com/droppable");  
+		WebElement dragelement = driver.findElement(By.xpath("//div[@id='draggable']"));
+		WebElement dropelement = driver.findElement(By.xpath("//div[@id='droppable']"));//includeclass also to get 1 on 1 
+		Actions action = new Actions(driver);
+		action.dragAndDrop(dragelement, dropelement).build().perform();
+	  }
+	  @Test
+	  
+	  public void verifyDragAndDropoffset() // When target is unknown
+	  {
+		driver.get("https://demoqa.com/dragabble"); 
+		WebElement dragelement = driver.findElement(By.xpath("//div[@id='dragBox']"));
+		Actions action = new Actions(driver);
+		action.dragAndDropBy(dragelement,150,150).build().perform();// pixel value for axis
+	  }
+	   @Test
+	   
+	  public void verifyMouseHover() 
+	   {
+		  driver.get("https://demoqa.com/menu/");
+		  WebElement mainelement = driver.findElement(By.xpath("//a[text()='Main Item 2']"));
+		  Actions action = new Actions(driver);
+		  action.moveToElement(mainelement).build().perform();
+		  WebElement subelement = driver.findElement(By.xpath("//a[text()='SUB SUB LIST »']"));
+		  action.moveToElement(subelement).build().perform();
+	  }
+	   @Test
+	   
+	   public void verifySimpleAlert() // To verify Alert
+	   {
+		driver.get("https://demoqa.com/alerts"); 
+		WebElement clickme_button = driver.findElement(By.xpath("//button[@id='alertButton']"));
+		clickme_button.click();
+		Alert alert = driver.switchTo().alert();// To switch to alert
+		alert.accept(); // To click ok on Alert 
+		}
+	   
+	   @Test
+	   
+	   public void validateConfirmationAlert() 
+	   {
+		driver.get("https://demoqa.com/alerts");
+		WebElement confirm_button = driver.findElement(By.xpath("//button[@id='confirmButton']"));
+		confirm_button.click();
+		Alert alert = driver.switchTo().alert();
+		String alert_text = alert.getText();
+		System.out.println(alert_text);
+		alert.dismiss();
+		WebElement clickcancelelement = driver.findElement(By.xpath("//span[@id='confirmResult']"));
+		String actualresult = clickcancelelement.getText();
+		String expectedresult = "You selected Cancel";
+		Assert.assertEquals(actualresult,expectedresult,"You Selected OK");
+	   }
+	   
+	   @Test
+	   
+	   public void validatePromptAlert() 
+	   {
+		 driver.get("https://demoqa.com/alerts");  
+		 WebElement prompt_button = driver.findElement(By.xpath("//button[@id='promtButton']"));
+		 prompt_button.click();
+		 Alert alert = driver.switchTo().alert();
+		 String alert_text = alert.getText();
+		 System.out.println(alert_text);
+		 alert.sendKeys("The name is test");
+		 alert.accept();
+		 WebElement textmessage_name = driver.findElement(By.xpath("//span[@id='promptResult']"));
+		 String actualresult = textmessage_name.getText();
+		 String expectedresult = "You entered The name is test";
+		 Assert.assertEquals(actualresult, expectedresult,"You have not entered a text");
+		 
+	   }
+	    @Test
+	    
+	   public void validateDoubleClickAlert() 
+	   {
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");   
+		WebElement doubleclick = driver.findElement(By.xpath("//button[text()='Double-Click Me To See Alert']"));
+		Actions action = new Actions(driver);
+		action.doubleClick(doubleclick).build().perform();
+	    Alert alert = driver.switchTo().alert();
+		String alert_text = alert.getText();
+		System.out.println(alert_text);
+		alert.accept();
+		
+	   }
   }     
 	 
 
