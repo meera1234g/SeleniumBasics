@@ -1,16 +1,19 @@
 
 	package seleniumbasiccommands;
-
-	import java.util.List;
+    import java.util.Iterator;
+    import java.util.List;
+    import java.util.Set;
 
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
+    import org.openqa.selenium.By;
     import org.openqa.selenium.WebDriver;
     import org.openqa.selenium.WebElement;
     import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
+    import org.openqa.selenium.interactions.Actions;
+
 import org.openqa.selenium.support.ui.Select;
-	import org.testng.Assert;
+
+import org.testng.Assert;
 	import org.testng.annotations.Test;
 
 	public class Seleniumcommands extends Browserlaunch {
@@ -234,7 +237,7 @@ import org.openqa.selenium.support.ui.Select;
 		driver.get("https://demoqa.com/alerts"); 
 		WebElement clickme_button = driver.findElement(By.xpath("//button[@id='alertButton']"));
 		clickme_button.click();
-		Alert alert = driver.switchTo().alert();// To switch to alert
+		Alert alert = driver.switchTo().alert();// To switch to alert creating object for Alert
 		alert.accept(); // To click ok on Alert 
 		}
 	   
@@ -285,9 +288,46 @@ import org.openqa.selenium.support.ui.Select;
 		String alert_text = alert.getText();
 		System.out.println(alert_text);
 		alert.accept();
+	  }
+	    @Test
+	    
+	    public void verifyMultipleWindowHandling()
+	    {
+	       driver.get("https://demo.guru99.com/popup.php");
+	       String parentwindow_handleid = 	driver.getWindowHandle();
+	       System.out.println(parentwindow_handleid);
+	       WebElement click_button = driver.findElement(By.xpath("//a[@target='_blank'and text()='Click Here']"));
+	       click_button.click();
+	       Set<String> windowshandlesid = driver.getWindowHandles();
+	       System.out.println(windowshandlesid);
+	       Iterator <String> values = windowshandlesid.iterator();// 
+	       while(values.hasNext())// return type boolean
+	       {
+	    	String handleid = values.next();
+	    	if(!handleid.equals(parentwindow_handleid)) 
+	    	 {
+	    		driver.switchTo().window(handleid);
+	    		WebElement emailid = driver.findElement(By.xpath("//input[@name='emailid']"));
+	    		emailid.sendKeys("abc@gmail.com");
+	    		WebElement submit_button = driver.findElement(By.xpath("//input[@name='btnLogin']"));
+	    		submit_button.click();
+	    		driver.close();
+	    		
+	    	 }
+	      }
+	       driver.switchTo().window(parentwindow_handleid);
+	    }
+	   
+	@Test
+	
+	public void testnew() {
 		
-	   }
-  }     
+	    driver.get("https://demo.guru99.com/articles_popup.php");
+		WebElement emailid = driver.findElement(By.xpath("//input[@name='emailid']"));
+		emailid.sendKeys("abc@gmail.com");	
+	}}
+	
+	
 	 
 
 
