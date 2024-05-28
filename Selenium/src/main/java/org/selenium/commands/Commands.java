@@ -105,7 +105,7 @@ public class Commands
 		Select select = new Select(multipleelements);	
 		select.selectByVisibleText("Red");
 		select.selectByVisibleText("Yellow");
-		Boolean selectedvalue =  select.isMultiple();
+		Boolean selectedvalue =  select.isMultiple(); // To check if it allows multiple selection
 		System.out.println(selectedvalue);
 		List<WebElement> selectedvalues =   select.getAllSelectedOptions();
 		for(WebElement e : selectedvalues)
@@ -232,7 +232,16 @@ public class Commands
 		
 		
 	}
-	
-}
+	public void makeMyTrip() 
+    {
+		
+	WebDriver driver = new ChromeDriver();
+      driver.get("https://www.makemytrip.com/");	
+      WebElement menu1 = driver.findElement(By.xpath("//span[@class='latoBold'and text()='Introducing myBiz']"));
+      menu1.click();
+      
+      
+    
+}}
 	
 

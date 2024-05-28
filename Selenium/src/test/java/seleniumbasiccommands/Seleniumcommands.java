@@ -1,18 +1,24 @@
 
 	package seleniumbasiccommands;
-    import java.util.Iterator;
+    import static org.testng.Assert.assertEquals;
+
+import java.time.Duration;
+import java.util.Iterator;
     import java.util.List;
-    import java.util.Set;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.openqa.selenium.Alert;
     import org.openqa.selenium.By;
-    import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
     import org.openqa.selenium.WebElement;
     import org.openqa.selenium.chrome.ChromeDriver;
     import org.openqa.selenium.interactions.Actions;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 	import org.testng.annotations.Test;
 
@@ -294,7 +300,7 @@ import org.testng.Assert;
 	    public void verifyMultipleWindowHandling()
 	    {
 	       driver.get("https://demo.guru99.com/popup.php");
-	       String parentwindow_handleid = 	driver.getWindowHandle();
+	       String parentwindow_handleid = 	driver.getWindowHandle();// To get window handle id
 	       System.out.println(parentwindow_handleid);
 	       WebElement click_button = driver.findElement(By.xpath("//a[@target='_blank'and text()='Click Here']"));
 	       click_button.click();
@@ -318,14 +324,212 @@ import org.testng.Assert;
 	       driver.switchTo().window(parentwindow_handleid);
 	    }
 	   
-	@Test
+	
+	    @Test
+	
 	
 	public void testnew() {
 		
 	    driver.get("https://demo.guru99.com/articles_popup.php");
 		WebElement emailid = driver.findElement(By.xpath("//input[@name='emailid']"));
 		emailid.sendKeys("abc@gmail.com");	
-	}}
+	}
+	    @Test
+	    
+	  public void  verifyFileUpload() 
+	  {
+		driver.get("https://demo.guru99.com/test/upload/");
+		WebElement fileupload_field = driver.findElement(By.xpath("//input[@name='uploadfile_0']"));
+		fileupload_field.sendKeys("C:\\Users\\Meera Rupak\\git\\SeleniumBasics\\Selenium\\src\\main\\resources");
+		WebElement checkbox_field = driver.findElement(By.xpath("//input[@id='terms']"));
+		checkbox_field.click();
+		WebElement submit_button = driver.findElement(By.xpath("//button[@id='submitbutton']"));
+		submit_button.click();
+		WebElement text_name = driver.findElement(By.xpath("//h3[@id='res']"));
+		String expected_result = text_name.getText();
+		System.out.println(expected_result);
+		//String actual_result = "1 file has been successfully uploaded";
+		//Assert.assertEquals(actual_result, expected_result, " File not uploaded");
+	}
+	  @Test
+	  
+	    public void verifyFrames() 
+	    {
+	      driver.get("https://demoqa.com/frames");	
+	      List <WebElement> iframe_tags = driver.findElements(By.tagName("iframe"));
+	      int size =  iframe_tags.size();
+	      System.out.println("The total number of frames in the Webpage  "+ size);
+	      //driver.switchTo().frame(3);
+	      //driver.switchTo().frame("frame1");
+	      WebElement frame = driver.findElement(By.id("frame1"));
+	      driver.switchTo().frame(frame);
+	      WebElement frame1_text = driver.findElement(By.id("sampleHeading"));
+	      String frame_text = frame1_text.getText();
+	      System.out.println(frame_text);
+	      driver.switchTo().defaultContent();// to home page from a frame
+	    } 
+	  @Test
+	  
+	  public void verifyPraticeFrames() 
+	    {
+	      driver.get("https://www.hyrtutorials.com/p/frames-practice.html");	
+	      List <WebElement> iframe_tags = driver.findElements(By.tagName("iframe"));
+	      int numberoftags =  iframe_tags.size();
+	      System.out.println("The total number of frames in the Webpage  "+ numberoftags);
+	      WebElement text_field = driver.findElement(By.xpath("//input[@id='name']")); // Always showin 1 of 2
+	      text_field.sendKeys("Test");
+	      driver.switchTo().frame("frm1");
+	      WebElement menu1 = driver.findElement(By.xpath("//select[@id='course']"));
+	      Select select = new Select(menu1);
+	      select.selectByVisibleText("Java");
+	      driver.switchTo().defaultContent();
+	      driver.switchTo().frame("frm2");
+	      WebElement frame1_text = driver.findElement(By.xpath("//select[@id='selectnav1']"));
+	      Select select1 = new Select(frame1_text);
+	      select1.selectByVisibleText("-- Selenium");
+		  driver.switchTo().defaultContent();// to home page from a frame
+	    } 
+	  @Test
+	  
+	  public void verifyPraticeFramesadd() 
+	    {
+	      driver.get("https://www.hyrtutorials.com/p/frames-practice.html");	
+	      WebElement text_field = driver.findElement(By.xpath("//input[@id='name']")); // Always showin 1 of 2
+	      text_field.sendKeys("Test");
+	      driver.switchTo().frame("frm1");
+	      WebElement menu1 = driver.findElement(By.xpath("//select[@id='course']"));
+	      Select select = new Select(menu1);
+	      select.selectByVisibleText("Java");
+	      WebElement dropdown = driver.findElement(By.xpath("//select[@id='selectnav1']"));
+	      Select select1 = new Select(dropdown);
+	      select1.selectByValue("https://www.hyrtutorials.com/search/label/Selenium");
+	      select1.selectByVisibleText("Tech News");
+	      driver.switchTo().defaultContent();
+	      driver.switchTo().frame("frm2");
+	      WebElement firstname = driver.findElement(By.xpath("//input[@id='firstName']"));
+	      firstname.sendKeys("Meera");
+	      WebElement lastname = driver.findElement(By.xpath("//input[@id='lastName']"));
+	      lastname.sendKeys("G");
+	      
+	      
+	    } 
+	  @Test
+	  
+	    public void verifyDynamicTable() 
+	    {
+	      driver.get("https://money.rediff.com/indices");	
+	      WebElement showmore  = driver.findElement(By.xpath("//a[@id='showMoreLess']"));
+	      showmore.click();
+	      WebElement table_data  = driver.findElement(By.xpath("//table[@id='dataTable']//tbody"));
+	      List <WebElement> rows = table_data.findElements(By.tagName("tr"));
+	      int rowsize = rows.size();
+	      //System.out.println("The number of rows " + rows);
+	      for(int i = 0; i< rowsize ; i++)
+	      {
+	    	  List <WebElement> coloumns = rows.get(i).findElements(By.tagName("td"));
+	    	  int coloumnsize = coloumns.size();
+	    	 //System.out.println("The number of rows " + coloumnsize);
+	    	 for(int j = 0; j< coloumnsize ; j++) 
+	    	 {
+	    		 String celltext = coloumns.get(j).getText();
+	    		 if(celltext.equals("S&P BSE 200"))
+	    		 {
+	    		   System.out.println("Previous close value is  " + coloumns.get(1).getText());		 
+	    	     }
+	         }
+	     }
+	    }
+	  
+	 // driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20)); // Page Load Wait
+	  
+	  @Test
+	  
+	  public void verifyExplicitWait() 
+	  
+	  {
+		
+		driver.get("https://demoqa.com/alerts");  
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(20)); // Explicit Wait WebDriverWait is an Interface
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("timerAlertButton"))); // wait for this condtion
+		WebElement click_button = driver.findElement(By.id("timerAlertButton"));
+		click_button.click();
+		wait.until(ExpectedConditions.alertIsPresent());
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
+	  }
+	  @Test
+	  
+     public void verifyImplicitWait() 
+	  
+	  {
+		driver.get("https://demoqa.com/alerts"); 
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		WebElement click_button = driver.findElement(By.id("timerAlertButton"));
+		click_button.click();
+	    Alert alert = driver.switchTo().alert();
+        alert.accept();
+	  }
+	  @Test
+	  
+	  public void verifyFluentWait() 
+	  {
+		 driver.get("https://demoqa.com/alerts");  
+		 FluentWait wait = new FluentWait(driver);
+		// wait.withTimeout(Duration.ofSeconds(20));
+		 wait.pollingEvery(Duration.ofSeconds(8));
+		// wait.ignoring(NoSuchElementException.class);
+		 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("timerAlertButton")));
+		 WebElement click_button = driver.findElement(By.id("timerAlertButton"));
+		 click_button.click();
+		 wait.until(ExpectedConditions.alertIsPresent());
+		 Alert alert = driver.switchTo().alert();
+		 alert.accept();
+		 
+		 
+	  }
+	  
+	  @Test
+	  
+	  public void verifyJavascriptSendKeysandClick() 
+	  {
+		 driver.get("https://demowebshop.tricentis.com/"); 
+		 JavascriptExecutor js = (JavascriptExecutor)driver;
+		 js.executeScript("document.getElementById(\"newsletter-email\").value='abc@gmail.com'");
+		 js.executeScript("document.getElementById(\"newsletter-subscribe-button\").click()");
+	  }
+	  @Test
+	  public void verifyVerticalScroll() 
+	  {
+		driver.get("https://demowebshop.tricentis.com/"); 
+		JavascriptExecutor js = (JavascriptExecutor)driver; 
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+	  }
+	  @Test
+	  
+	  public void verifyJavascriptDemoWebShopDemo() 
+	  {
+		  driver.get("https://demowebshop.tricentis.com/login");
+		  JavascriptExecutor js = (JavascriptExecutor)driver;
+		  js.executeScript("document.getElementById(\"Email\").value='zqxcvbnm@gmail.com'");
+		  js.executeScript("document.getElementById(\"Password\").value='qwerty'");
+		 // js.executeScript("document.getElementsByClassName('button-1 login-button').click()");
+	  }
+	  
+	  @Test
+	  public void verifyScreenshot() 
+	  {
+		 driver.get("https://demowebshop.tricentis.com/"); 
+	     String title = driver.getTitle();
+	     System.out.println(title);
+	     String expectedtitle = "aBS";
+	     Assert.assertEquals(title, expectedtitle, "Invalid title");
+	     
+		
+	  }
+	  
+	}
+	
+
 	
 	
 	 
