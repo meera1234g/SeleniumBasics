@@ -15,7 +15,7 @@ public class RegistrationPageTest extends BrowseraLaunch
 	 
 	@Test
 		
-	 public void verifyRegistrationPageTitle() throws IOException 
+	 public void verifyRegistrationPageTitle() 
 	 {
 	   driver.get("https://demowebshop.tricentis.com/login");
 	   String actualtitle = driver.getTitle();

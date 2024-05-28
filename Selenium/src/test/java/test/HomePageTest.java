@@ -17,7 +17,7 @@ public class HomePageTest extends BrowseraLaunch
 {
 @Test
 	
-  public void verifyHomePageTitle() throws IOException 
+  public void verifyHomePageTitle()
   {
 	
 	driver.get("https://demowebshop.tricentis.com/");
@@ -29,7 +29,7 @@ public class HomePageTest extends BrowseraLaunch
 
   @Test
   
-   public void verifyCoomunityPoolSelection() throws IOException 
+   public void verifyCoomunityPoolSelection() 
   
 	  {
 	       driver.get("https://demowebshop.tricentis.com/ ");
@@ -37,16 +37,17 @@ public class HomePageTest extends BrowseraLaunch
 	       String data = ExcelUtility.readStringData(0, 1, "HomePage");
 	       for(int i= 0; i<communitypoolelements.size();i++)	{ // for loop to fetch for elements
 		   
-		   String pollElementText = communitypoolelements.get(i).getText(); // Store to a string variable 
+		   String pollElementText = communitypoolelements.get(i).getText(); // Store to a string variable
+		   System.out.println(pollElementText);
 		   if (pollElementText.equals(data)) 
 		   { // to check if two strings are equal using equals()
 		   communitypoolelements.get(i).click();// to click on that
-		   
-			// Assertion for this??  not working for us selected
+		   }
+			// Assertion for this??  not working for is selected
 		   WebElement elementselected = driver.findElement(By.xpath("//label[@for='pollanswers-2']"));
-		   Boolean iselementenabled = elementselected.isEnabled();
+		   boolean iselementenabled = elementselected.isSelected();
 		   Assert.assertTrue(iselementenabled, "Element is not selected");
-	       }
+	       
       }
 
 	  }}
