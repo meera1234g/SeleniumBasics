@@ -8,12 +8,13 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import AutomationCore.BrowseraLaunch;
+import Listeners.RetryAnalyzer;
 import dataprovider.DataProviders;
 import utilities.ExcelUtility;
 
 public class LoginPageTest extends BrowseraLaunch
 {	
-@Test
+@Test(priority = 2)
 
  public void verifyLoginPageTitle()
  {
@@ -25,14 +26,14 @@ public class LoginPageTest extends BrowseraLaunch
     Assert.assertEquals(title, expectedtitle, "Invalid Title");
   }
  
-@Test	
+@Test(priority = 3 ,retryAnalyzer = RetryAnalyzer.class )	
  public void verifyUserLogin()  
  {
  	driver.get("https://demowebshop.tricentis.com/login");
  	WebElement emailid_field = driver.findElement(By.xpath("//input[@id='Email']"));
- 	emailid_field.sendKeys("abctest439@gmail.com");
+ 	emailid_field.sendKeys(ExcelUtility.readStringData(0, 3, "LoginPage"));
  	WebElement password_field = driver.findElement(By.xpath("//input[@id='Password']"));
- 	password_field.sendKeys("Test123");
+ 	password_field.sendKeys(ExcelUtility.readStringData(0, 4, "LoginPage"));
  	WebElement submit_button = driver.findElement(By.xpath("//input[@class='button-1 login-button']"));
  	submit_button.click();
  	WebElement nameofemailid = driver.findElement(By.xpath("//a[text()='abctest439@gmail.com']"));

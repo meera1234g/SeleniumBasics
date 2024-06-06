@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Functional Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="HomePage Test(failed)">
+    <parameter name="browser" value="Chrome"/>
+    <classes>
+      <class name="test.HomePageTest">
+        <methods>
+          <include name="closeBrowser"/>
+          <include name="verifyCoomunityPoolSelection"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- test.HomePageTest -->
+    </classes>
+  </test> <!-- HomePage Test(failed) -->
+  <test thread-count="5" name="LoginPage Test(failed)">
+    <parameter name="browser" value="edge"/>
+    <classes>
+      <class name="test.LoginPageTest">
+        <methods>
+          <include name="closeBrowser"/>
+          <include name="verifyInvalidUserlogin" invocation-numbers="0"/>
+          <include name="verifyLoginPageTitle"/>
+          <include name="verifyUserLogin"/>
+          <include name="setup"/>
+        </methods>
+      </class> <!-- test.LoginPageTest -->
+    </classes>
+  </test> <!-- LoginPage Test(failed) -->
+  <test thread-count="5" name="RegisterPage Test(failed)">
+    <parameter name="browser" value="Firefox"/>
+    <classes>
+      <class name="test.RegistrationPageTest">
+        <methods>
+          <include name="closeBrowser"/>
+          <include name="verifyRegistrationPageTitle"/>
+          <include name="setup"/>
+          <include name="verifyUserRegistration"/>
+        </methods>
+      </class> <!-- test.RegistrationPageTest -->
+    </classes>
+  </test> <!-- RegisterPage Test(failed) -->
+</suite> <!-- Failed suite [Functional Suite] -->
